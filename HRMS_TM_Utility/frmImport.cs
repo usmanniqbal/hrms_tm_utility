@@ -24,10 +24,14 @@ namespace HRMS_TM_Utility
 		private void btnFetch_Click(object sender, EventArgs e)
 		{
 			Mail mail;
-			var dataSource = _outlookService.GetMails((Profile)cboProfiles.SelectedItem, dtpFrom.Value, dtpTo.Value).OrderBy(o => o.ReceivedTime).ToList();
+			var dataSource = _outlookService.GetMails((Profile)cboProfiles.SelectedItem, dtpFrom.Value, dtpTo.Value)
+				.OrderBy(o => o.Date)
+				.ThenBy(o => o.Email)
+				.ToList();
 			dgv.DataSource = dataSource;
 			dgv.Columns[nameof(mail.Email)].ReadOnly = true;
 			dgv.Columns[nameof(mail.Name)].ReadOnly = true;
+			dgv.Columns[nameof(mail.Status)].Visible = false;
 			btnExport.Enabled = dataSource.Count > 0;
 		}
 

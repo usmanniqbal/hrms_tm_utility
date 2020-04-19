@@ -16,8 +16,5 @@ namespace HRMS_TM_Utility
 		public decimal Hours { get; set; }
 		public bool Status { get; set; }
 		public string Remarks { get; set; }
-		public DateTime ReceivedTime { get; set; }
-		public string Subject { get; set; }
-		public string Body { get; set; }
 	}
 }

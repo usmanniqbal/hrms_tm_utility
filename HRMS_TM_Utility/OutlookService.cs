@@ -75,7 +75,6 @@ namespace HRMS_TM_Utility
 					{
 						Email = GetSenderSMTPAddress(mailItem),
 						Name = mailItem.SenderName,
-						ReceivedTime = mailItem.ReceivedTime,
 					};
 
 					var wfhDate = Regex.Match(isWfh.Value, dateTemplate.extract, RegexOptions.IgnoreCase);
