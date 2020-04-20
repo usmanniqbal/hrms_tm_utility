@@ -12,6 +12,6 @@ namespace HRMS_TM_Utility
 		public Guid Id { get; set; }
 		public string ProfileName { get; set; }
 		public string StoreName { get; set; }
-		public string Folder { get; set; } = "Inbox";
+		public string Folder { get; set; }
 	}
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.Office.Interop.Outlook;
+﻿using log4net;
+using Microsoft.Office.Interop.Outlook;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Concurrent;
@@ -14,17 +15,27 @@ namespace HRMS_TM_Utility
 {
 	public class OutlookService : IOutlookService
 	{
+		private readonly ILog _log;
+		public OutlookService(ILog log)
+		{
+			_log = log;
+		}
+
 		public ConcurrentBag<Mail> GetMails(Profile profile, DateTime dateFrom, DateTime dateTo)
 		{
+			_log.Info($"GetMails: between {dateFrom.Date} - {dateTo.Date}");
 			ConcurrentBag<Mail> result = new ConcurrentBag<Mail>();
 			Application outlook = new Application();
 			NameSpace names = outlook.GetNamespace("MAPI");
 
 			Store store = null;
+			_log.Info("GetMails: Reading Accounts");
 			foreach (Store s in names.Stores)
 			{
+				_log.Info($"GetMails: {s.DisplayName} account processing");
 				if (s.DisplayName == profile.StoreName)
 				{
+					_log.Info($"GetMails: {s.DisplayName} account matched");
 					store = s;
 					break;
 				}
@@ -34,20 +45,31 @@ namespace HRMS_TM_Utility
 				return result;
 			}
 
+			_log.Info($"GetMails: reading templates.json");
 			var template = JsonConvert.DeserializeObject<MainTemplate>(File.ReadAllText("templates.json"));
-			MAPIFolder inbox = store.GetDefaultFolder(OlDefaultFolders.olFolderInbox);
+			_log.Info($"GetMails: fetching Inbox folder");
+			MAPIFolder folder = store.GetDefaultFolder(OlDefaultFolders.olFolderInbox);
+			if (!string.IsNullOrEmpty(profile.Folder))
+			{
+				_log.Info($"GetMails: fetching {profile.Folder} folder");
+				folder = folder.Folders.Cast<Folder>().First(o => o.Name == profile.Folder);
+			}
+
 			dateTo = dateTo.Date.AddDays(1).AddSeconds(-1);
-			inbox.Items.Cast<object>().AsParallel().ForAll(item =>
+			_log.Info($"GetMails: Starting loop on all emails in {folder.Name}");
+			folder.Items.Cast<object>().AsParallel().ForAll(item =>
 			{
 				if (!(item is MailItem mailItem))
 					return;
 				try
 				{
+					_log.Info($"GetMails: Mail entry in: {folder.Name} received on: {mailItem.ReceivedTime.ToLongDateString()} from: {mailItem.SenderName} with subject: {mailItem.Subject}");
 					if (mailItem.ReceivedTime > dateTo)
 						return;
 				}
 				catch (System.InvalidCastException)
 				{
+					_log.Info($"GetMails: Invalid mail entry in {folder.Name}");
 					return;
 				}
 				if (mailItem.ReceivedTime.Date < dateFrom.Date)
@@ -64,7 +86,7 @@ namespace HRMS_TM_Utility
 
 		private Mail parseWFHMail(MailItem mailItem, WFHTemplate wfhTemplate)
 		{
-			StringBuilder sbRemarks = new StringBuilder();
+			StringBuilder sbRemarks = new StringBuilder("WFH");
 			Mail result = null;
 			foreach (var dateTemplate in wfhTemplate.date)
 			{

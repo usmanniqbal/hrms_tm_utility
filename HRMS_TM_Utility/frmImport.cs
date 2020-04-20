@@ -14,10 +14,11 @@ namespace HRMS_TM_Utility
 	{
 		private readonly IOutlookService _outlookService;
 		private readonly IExcelService _excelService;
+		private static readonly log4net.ILog _log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 		public frmImport()
 		{
 			InitializeComponent();
-			_outlookService = new OutlookService();
+			_outlookService = new OutlookService(_log);
 			_excelService = new ExcelService();
 		}
 
@@ -31,6 +32,7 @@ namespace HRMS_TM_Utility
 			dgv.DataSource = dataSource;
 			dgv.Columns[nameof(mail.Email)].ReadOnly = true;
 			dgv.Columns[nameof(mail.Name)].ReadOnly = true;
+			dgv.Columns[nameof(mail.Date)].ReadOnly = true;
 			dgv.Columns[nameof(mail.Status)].Visible = false;
 			btnExport.Enabled = dataSource.Count > 0;
 		}
@@ -97,20 +99,19 @@ namespace HRMS_TM_Utility
 
 		private void btnExport_Click(object sender, EventArgs e)
 		{
-			string path;
 			using (SaveFileDialog saveFileDialog = new SaveFileDialog())
 			{
 				saveFileDialog.FileName = $"{dtpFrom.Value.ToString("yyyyMMdd")}-{dtpTo.Value.ToString("yyyyMMdd")}.xlsx";
 				saveFileDialog.Filter = "Excel (*.xlsx)|*.xlsx";
 				if (saveFileDialog.ShowDialog() == DialogResult.OK)
 				{
-					path = saveFileDialog.FileName;
-				}
-				else
-				{
-					return;
+					Export(saveFileDialog.FileName);
 				}
 			}
+		}
+
+		private void Export(string path)
+		{
 			List<ExcelEntity> excelEntities = new List<ExcelEntity>();
 			ExcelEntity excelEntity;
 			foreach (DataGridViewRow row in dgv.Rows)

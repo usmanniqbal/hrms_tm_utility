@@ -51,10 +51,10 @@
 			// 
 			// btnFetch
 			// 
-			this.btnFetch.Location = new System.Drawing.Point(355, 5);
-			this.btnFetch.Margin = new System.Windows.Forms.Padding(2);
+			this.btnFetch.Location = new System.Drawing.Point(473, 6);
+			this.btnFetch.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.btnFetch.Name = "btnFetch";
-			this.btnFetch.Size = new System.Drawing.Size(48, 21);
+			this.btnFetch.Size = new System.Drawing.Size(64, 26);
 			this.btnFetch.TabIndex = 0;
 			this.btnFetch.Text = "Fetch";
 			this.btnFetch.UseVisualStyleBackColor = true;
@@ -62,26 +62,26 @@
 			// 
 			// txtStoreName
 			// 
-			this.txtStoreName.Location = new System.Drawing.Point(82, 72);
-			this.txtStoreName.Margin = new System.Windows.Forms.Padding(2);
+			this.txtStoreName.Location = new System.Drawing.Point(109, 89);
+			this.txtStoreName.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.txtStoreName.Name = "txtStoreName";
-			this.txtStoreName.Size = new System.Drawing.Size(322, 20);
+			this.txtStoreName.Size = new System.Drawing.Size(428, 22);
 			this.txtStoreName.TabIndex = 1;
 			// 
 			// txtFolderName
 			// 
-			this.txtFolderName.Location = new System.Drawing.Point(82, 94);
-			this.txtFolderName.Margin = new System.Windows.Forms.Padding(2);
+			this.txtFolderName.Location = new System.Drawing.Point(109, 116);
+			this.txtFolderName.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.txtFolderName.Name = "txtFolderName";
-			this.txtFolderName.Size = new System.Drawing.Size(322, 20);
+			this.txtFolderName.Size = new System.Drawing.Size(428, 22);
 			this.txtFolderName.TabIndex = 2;
 			// 
 			// btnNew
 			// 
-			this.btnNew.Location = new System.Drawing.Point(82, 28);
-			this.btnNew.Margin = new System.Windows.Forms.Padding(2);
+			this.btnNew.Location = new System.Drawing.Point(109, 34);
+			this.btnNew.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.btnNew.Name = "btnNew";
-			this.btnNew.Size = new System.Drawing.Size(48, 21);
+			this.btnNew.Size = new System.Drawing.Size(64, 26);
 			this.btnNew.TabIndex = 5;
 			this.btnNew.Text = "New";
 			this.btnNew.UseVisualStyleBackColor = true;
@@ -91,50 +91,46 @@
 			// 
 			this.cboProfiles.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.cboProfiles.FormattingEnabled = true;
-			this.cboProfiles.Location = new System.Drawing.Point(82, 5);
-			this.cboProfiles.Margin = new System.Windows.Forms.Padding(2);
+			this.cboProfiles.Location = new System.Drawing.Point(109, 6);
+			this.cboProfiles.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.cboProfiles.Name = "cboProfiles";
-			this.cboProfiles.Size = new System.Drawing.Size(270, 21);
+			this.cboProfiles.Size = new System.Drawing.Size(359, 24);
 			this.cboProfiles.TabIndex = 6;
 			this.cboProfiles.SelectedValueChanged += new System.EventHandler(this.cboProfiles_SelectedValueChanged);
 			// 
 			// label1
 			// 
 			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(9, 7);
-			this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+			this.label1.Location = new System.Drawing.Point(12, 9);
 			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(69, 13);
+			this.label1.Size = new System.Drawing.Size(91, 17);
 			this.label1.TabIndex = 7;
 			this.label1.Text = "Select Profile";
 			// 
 			// label2
 			// 
 			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(2, 76);
-			this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+			this.label2.Location = new System.Drawing.Point(3, 94);
 			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(78, 13);
+			this.label2.Size = new System.Drawing.Size(100, 17);
 			this.label2.TabIndex = 8;
 			this.label2.Text = "Account Name";
 			// 
 			// label3
 			// 
 			this.label3.AutoSize = true;
-			this.label3.Location = new System.Drawing.Point(10, 97);
-			this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+			this.label3.Location = new System.Drawing.Point(25, 119);
 			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(67, 13);
+			this.label3.Size = new System.Drawing.Size(77, 17);
 			this.label3.TabIndex = 9;
-			this.label3.Text = "Folder Name";
+			this.label3.Text = "Sub Folder";
 			// 
 			// label5
 			// 
 			this.label5.AutoSize = true;
-			this.label5.Location = new System.Drawing.Point(14, 115);
-			this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+			this.label5.Location = new System.Drawing.Point(19, 142);
 			this.label5.Name = "label5";
-			this.label5.Size = new System.Drawing.Size(65, 13);
+			this.label5.Size = new System.Drawing.Size(84, 17);
 			this.label5.TabIndex = 11;
 			this.label5.Text = "Date Range";
 			// 
@@ -144,38 +140,37 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.dgv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			this.dgv.Location = new System.Drawing.Point(9, 139);
-			this.dgv.Margin = new System.Windows.Forms.Padding(2);
+			this.dgv.Location = new System.Drawing.Point(12, 171);
+			this.dgv.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.dgv.Name = "dgv";
 			this.dgv.RowHeadersWidth = 51;
 			this.dgv.RowTemplate.Height = 24;
-			this.dgv.Size = new System.Drawing.Size(583, 310);
+			this.dgv.Size = new System.Drawing.Size(777, 382);
 			this.dgv.TabIndex = 12;
 			// 
 			// txtProfileName
 			// 
-			this.txtProfileName.Location = new System.Drawing.Point(82, 50);
-			this.txtProfileName.Margin = new System.Windows.Forms.Padding(2);
+			this.txtProfileName.Location = new System.Drawing.Point(109, 62);
+			this.txtProfileName.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.txtProfileName.Name = "txtProfileName";
-			this.txtProfileName.Size = new System.Drawing.Size(322, 20);
+			this.txtProfileName.Size = new System.Drawing.Size(428, 22);
 			this.txtProfileName.TabIndex = 1;
 			// 
 			// label6
 			// 
 			this.label6.AutoSize = true;
-			this.label6.Location = new System.Drawing.Point(10, 54);
-			this.label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+			this.label6.Location = new System.Drawing.Point(13, 66);
 			this.label6.Name = "label6";
-			this.label6.Size = new System.Drawing.Size(67, 13);
+			this.label6.Size = new System.Drawing.Size(89, 17);
 			this.label6.TabIndex = 8;
 			this.label6.Text = "Profile Name";
 			// 
 			// btnSave
 			// 
-			this.btnSave.Location = new System.Drawing.Point(134, 28);
-			this.btnSave.Margin = new System.Windows.Forms.Padding(2);
+			this.btnSave.Location = new System.Drawing.Point(179, 34);
+			this.btnSave.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.btnSave.Name = "btnSave";
-			this.btnSave.Size = new System.Drawing.Size(48, 21);
+			this.btnSave.Size = new System.Drawing.Size(64, 26);
 			this.btnSave.TabIndex = 5;
 			this.btnSave.Text = "Save";
 			this.btnSave.UseVisualStyleBackColor = true;
@@ -183,10 +178,10 @@
 			// 
 			// btnCancel
 			// 
-			this.btnCancel.Location = new System.Drawing.Point(187, 28);
-			this.btnCancel.Margin = new System.Windows.Forms.Padding(2);
+			this.btnCancel.Location = new System.Drawing.Point(249, 34);
+			this.btnCancel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.btnCancel.Name = "btnCancel";
-			this.btnCancel.Size = new System.Drawing.Size(48, 21);
+			this.btnCancel.Size = new System.Drawing.Size(64, 26);
 			this.btnCancel.TabIndex = 13;
 			this.btnCancel.Text = "Cancel";
 			this.btnCancel.UseVisualStyleBackColor = true;
@@ -196,42 +191,40 @@
 			// 
 			this.dtpFrom.Checked = false;
 			this.dtpFrom.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-			this.dtpFrom.Location = new System.Drawing.Point(82, 115);
-			this.dtpFrom.Margin = new System.Windows.Forms.Padding(2);
+			this.dtpFrom.Location = new System.Drawing.Point(109, 142);
+			this.dtpFrom.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.dtpFrom.MinDate = new System.DateTime(2000, 1, 1, 0, 0, 0, 0);
 			this.dtpFrom.Name = "dtpFrom";
-			this.dtpFrom.Size = new System.Drawing.Size(90, 20);
+			this.dtpFrom.Size = new System.Drawing.Size(119, 22);
 			this.dtpFrom.TabIndex = 14;
 			this.dtpFrom.Value = new System.DateTime(2029, 12, 25, 23, 59, 59, 0);
 			// 
 			// dtpTo
 			// 
 			this.dtpTo.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-			this.dtpTo.Location = new System.Drawing.Point(198, 115);
-			this.dtpTo.Margin = new System.Windows.Forms.Padding(2);
+			this.dtpTo.Location = new System.Drawing.Point(264, 142);
+			this.dtpTo.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.dtpTo.MinDate = new System.DateTime(2000, 1, 1, 0, 0, 0, 0);
 			this.dtpTo.Name = "dtpTo";
-			this.dtpTo.Size = new System.Drawing.Size(90, 20);
+			this.dtpTo.Size = new System.Drawing.Size(119, 22);
 			this.dtpTo.TabIndex = 14;
 			// 
 			// label7
 			// 
 			this.label7.AutoSize = true;
-			this.label7.Location = new System.Drawing.Point(175, 119);
-			this.label7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+			this.label7.Location = new System.Drawing.Point(233, 146);
 			this.label7.Name = "label7";
-			this.label7.Size = new System.Drawing.Size(20, 13);
+			this.label7.Size = new System.Drawing.Size(25, 17);
 			this.label7.TabIndex = 15;
 			this.label7.Text = "To";
 			// 
 			// btnExport
 			// 
-			this.btnExport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnExport.Enabled = false;
-			this.btnExport.Location = new System.Drawing.Point(544, 116);
-			this.btnExport.Margin = new System.Windows.Forms.Padding(2);
+			this.btnExport.Location = new System.Drawing.Point(725, 138);
+			this.btnExport.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.btnExport.Name = "btnExport";
-			this.btnExport.Size = new System.Drawing.Size(48, 21);
+			this.btnExport.Size = new System.Drawing.Size(64, 26);
 			this.btnExport.TabIndex = 16;
 			this.btnExport.Text = "Export";
 			this.btnExport.UseVisualStyleBackColor = true;
@@ -239,9 +232,9 @@
 			// 
 			// frmImport
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(601, 459);
+			this.ClientSize = new System.Drawing.Size(801, 565);
 			this.Controls.Add(this.btnExport);
 			this.Controls.Add(this.label7);
 			this.Controls.Add(this.dtpTo);
@@ -260,7 +253,7 @@
 			this.Controls.Add(this.txtFolderName);
 			this.Controls.Add(this.txtStoreName);
 			this.Controls.Add(this.btnFetch);
-			this.Margin = new System.Windows.Forms.Padding(2);
+			this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.Name = "frmImport";
 			this.Text = "Import";
 			this.Load += new System.EventHandler(this.frmImport_Load);
@@ -290,6 +283,6 @@
         private System.Windows.Forms.DateTimePicker dtpTo;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Button btnExport;
-    }
+	}
 }
 
