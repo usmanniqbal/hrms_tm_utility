@@ -46,6 +46,8 @@
 			this.dtpTo = new System.Windows.Forms.DateTimePicker();
 			this.label7 = new System.Windows.Forms.Label();
 			this.btnExport = new System.Windows.Forms.Button();
+			this.txtEmpCode = new System.Windows.Forms.TextBox();
+			this.label4 = new System.Windows.Forms.Label();
 			((System.ComponentModel.ISupportInitialize)(this.dgv)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -101,7 +103,7 @@
 			// label1
 			// 
 			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(12, 9);
+			this.label1.Location = new System.Drawing.Point(11, 9);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(91, 17);
 			this.label1.TabIndex = 7;
@@ -140,12 +142,12 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.dgv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			this.dgv.Location = new System.Drawing.Point(12, 171);
+			this.dgv.Location = new System.Drawing.Point(12, 195);
 			this.dgv.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.dgv.Name = "dgv";
 			this.dgv.RowHeadersWidth = 51;
 			this.dgv.RowTemplate.Height = 24;
-			this.dgv.Size = new System.Drawing.Size(777, 382);
+			this.dgv.Size = new System.Drawing.Size(1091, 537);
 			this.dgv.TabIndex = 12;
 			// 
 			// txtProfileName
@@ -220,8 +222,9 @@
 			// 
 			// btnExport
 			// 
+			this.btnExport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnExport.Enabled = false;
-			this.btnExport.Location = new System.Drawing.Point(725, 138);
+			this.btnExport.Location = new System.Drawing.Point(1039, 165);
 			this.btnExport.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.btnExport.Name = "btnExport";
 			this.btnExport.Size = new System.Drawing.Size(64, 26);
@@ -230,11 +233,30 @@
 			this.btnExport.UseVisualStyleBackColor = true;
 			this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
 			// 
+			// txtEmpCode
+			// 
+			this.txtEmpCode.Location = new System.Drawing.Point(109, 169);
+			this.txtEmpCode.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+			this.txtEmpCode.Name = "txtEmpCode";
+			this.txtEmpCode.Size = new System.Drawing.Size(119, 22);
+			this.txtEmpCode.TabIndex = 17;
+			// 
+			// label4
+			// 
+			this.label4.AutoSize = true;
+			this.label4.Location = new System.Drawing.Point(25, 172);
+			this.label4.Name = "label4";
+			this.label4.Size = new System.Drawing.Size(77, 17);
+			this.label4.TabIndex = 18;
+			this.label4.Text = "Emp. Code";
+			// 
 			// frmImport
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(801, 565);
+			this.ClientSize = new System.Drawing.Size(1115, 744);
+			this.Controls.Add(this.label4);
+			this.Controls.Add(this.txtEmpCode);
 			this.Controls.Add(this.btnExport);
 			this.Controls.Add(this.label7);
 			this.Controls.Add(this.dtpTo);
@@ -283,6 +305,8 @@
         private System.Windows.Forms.DateTimePicker dtpTo;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Button btnExport;
+		private System.Windows.Forms.TextBox txtEmpCode;
+		private System.Windows.Forms.Label label4;
 	}
 }
 

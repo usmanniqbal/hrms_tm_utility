@@ -50,22 +50,26 @@ namespace HRMS_TM_Utility
 
 				ExcelEntity e;
 				int rowIndex = 1;
-				workSheet.Cells[rowIndex, 1] = nameof(e.Name);
-				workSheet.Cells[rowIndex, 2] = nameof(e.Email);
-				workSheet.Cells[rowIndex, 3] = nameof(e.Date);
-				workSheet.Cells[rowIndex, 4] = nameof(e.TimeIn);
-				workSheet.Cells[rowIndex, 5] = nameof(e.TimeOut);
-				workSheet.Cells[rowIndex, 6] = nameof(e.Hours);
+				workSheet.Cells[rowIndex, ExcelColumns.Name] = nameof(e.Name);
+				workSheet.Cells[rowIndex, ExcelColumns.Email] = nameof(e.Email);
+				workSheet.Cells[rowIndex, ExcelColumns.EmployeeCode] = nameof(e.EmployeeCode);
+				workSheet.Cells[rowIndex, ExcelColumns.Date] = nameof(e.Date);
+				workSheet.Cells[rowIndex, ExcelColumns.TimeIn] = nameof(e.TimeIn);
+				workSheet.Cells[rowIndex, ExcelColumns.TimeOut] = nameof(e.TimeOut);
+				workSheet.Cells[rowIndex, ExcelColumns.Hours] = nameof(e.Hours);
+				workSheet.Cells[rowIndex, ExcelColumns.Remarks] = nameof(e.Remarks);
 
 				foreach (ExcelEntity entity in excelEntities)
 				{
 					rowIndex++;
-					workSheet.Cells[rowIndex, 1] = entity.Name;
-					workSheet.Cells[rowIndex, 2] = entity.Email;
-					workSheet.Cells[rowIndex, 3] = entity.Date;
-					workSheet.Cells[rowIndex, 4] = entity.TimeIn;
-					workSheet.Cells[rowIndex, 5] = entity.TimeOut;
-					workSheet.Cells[rowIndex, 6] = entity.Hours;
+					workSheet.Cells[rowIndex, ExcelColumns.Name] = entity.Name;
+					workSheet.Cells[rowIndex, ExcelColumns.Email] = entity.Email;
+					workSheet.Cells[rowIndex, ExcelColumns.EmployeeCode] = entity.EmployeeCode;
+					workSheet.Cells[rowIndex, ExcelColumns.Date] = entity.Date;
+					workSheet.Cells[rowIndex, ExcelColumns.TimeIn] = entity.TimeIn;
+					workSheet.Cells[rowIndex, ExcelColumns.TimeOut] = entity.TimeOut;
+					workSheet.Cells[rowIndex, ExcelColumns.Hours] = entity.Hours;
+					workSheet.Cells[rowIndex, ExcelColumns.Remarks] = entity.Remarks;
 				}
 				workBook.SaveAs(path);
 			}
@@ -79,5 +83,17 @@ namespace HRMS_TM_Utility
 	public interface IExcelService
 	{
 		void Export(string path, List<ExcelEntity> excelEntities);
+	}
+
+	public enum ExcelColumns : int
+	{
+		EmployeeCode = 1,
+		Name,
+		Email,
+		Date,
+		TimeIn,
+		TimeOut,
+		Hours,
+		Remarks
 	}
 }

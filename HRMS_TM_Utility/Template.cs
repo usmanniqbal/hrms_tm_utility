@@ -10,12 +10,12 @@ namespace HRMS_TM_Utility
 	public class MainTemplate
 	{
 		public WFHTemplate wfh { get; set; }
-		//public SearchTemplate[] leave { get; set; }
 	}
 
 	public class WFHTemplate
 	{
 		public SearchTemplate[] date { get; set; }
+		public SearchTemplate[] empcode { get; set; }
 		public SearchTemplate[] timein { get; set; }
 		public SearchTemplate[] timeout { get; set; }
 		public SearchTemplate[] hours { get; set; }

@@ -14,6 +14,10 @@ namespace HRMS_TM_Utility
 		[STAThread]
 		static void Main()
 		{
+
+			Application.ThreadException += (sender, args) => MessageBox.Show(args.Exception.Message);
+			AppDomain.CurrentDomain.UnhandledException += (sender, args) => MessageBox.Show(((Exception)args.ExceptionObject).Message);
+
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
 			Application.Run(new frmImport());

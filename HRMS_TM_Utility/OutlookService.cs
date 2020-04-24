@@ -21,10 +21,14 @@ namespace HRMS_TM_Utility
 			_log = log;
 		}
 
-		public ConcurrentBag<Mail> GetMails(Profile profile, DateTime dateFrom, DateTime dateTo)
+		public IEnumerable<Mail> GetMails(Profile profile, DateTime dateFrom, DateTime dateTo, string empCode)
 		{
+			if (profile == null)
+			{
+				throw new ApplicationException("Please create profile.");
+			}
 			_log.Info($"GetMails: between {dateFrom.Date} - {dateTo.Date}");
-			ConcurrentBag<Mail> result = new ConcurrentBag<Mail>();
+			ConcurrentDictionary<(string, DateTime), Mail> result = new ConcurrentDictionary<(string, DateTime), Mail>();
 			Application outlook = new Application();
 			NameSpace names = outlook.GetNamespace("MAPI");
 
@@ -42,7 +46,7 @@ namespace HRMS_TM_Utility
 			}
 			if (store == null)
 			{
-				return result;
+				return result.Values;
 			}
 
 			_log.Info($"GetMails: reading templates.json");
@@ -75,98 +79,127 @@ namespace HRMS_TM_Utility
 				if (mailItem.ReceivedTime.Date < dateFrom.Date)
 					return;
 
-				if (parseWFHMail(mailItem, template.wfh) is Mail mail)
+				if (parseWFHMail(mailItem, template.wfh, empCode) is Mail mail)
 				{
-					result.Add(mail);
+					if (!result.TryGetValue((mail.Email, mail.Date), out var existingMail)
+						|| existingMail.ReceivedTime < mail.ReceivedTime)
+					{
+						if (existingMail == null || result.TryRemove((existingMail.Email, existingMail.Date.Date), out existingMail))
+						{
+							result.TryAdd((mail.Email, mail.Date.Date), mail);
+						}
+					}
 				}
 			});
 
-			return result;
+			return result.Values;
 		}
 
-		private Mail parseWFHMail(MailItem mailItem, WFHTemplate wfhTemplate)
+		private Mail parseWFHMail(MailItem mailItem, WFHTemplate wfhTemplate, string empCode)
 		{
 			StringBuilder sbRemarks = new StringBuilder("WFH");
 			Mail result = null;
+
+			Func<SearchTemplate[], (string value, bool status)> parseTime = (searchTemplates) =>
+			{
+				foreach (var searchTemplate in searchTemplates)
+				{
+					var searchMatch = Regex.Match(mailItem.Body, searchTemplate.search, RegexOptions.IgnoreCase);
+					if (searchMatch.Success)
+					{
+						var extractMatch = Regex.Match(searchMatch.Value, searchTemplate.extract, RegexOptions.IgnoreCase);
+						if (extractMatch.Success)
+						{
+							return (extractMatch.Value, true);
+						}
+						else
+						{
+							return (string.Empty, false);
+						}
+					}
+				}
+
+				return (string.Empty, false);
+			};
+
 			foreach (var dateTemplate in wfhTemplate.date)
 			{
 				var isWfh = Regex.Match(mailItem.Subject, dateTemplate.search, RegexOptions.IgnoreCase);
 				if (isWfh.Success)
 				{
-					result = new Mail
-					{
-						Email = GetSenderSMTPAddress(mailItem),
-						Name = mailItem.SenderName,
-					};
+					var empCodeParsed = parseTime(wfhTemplate.empcode);
 
-					var wfhDate = Regex.Match(isWfh.Value, dateTemplate.extract, RegexOptions.IgnoreCase);
-					if (wfhDate.Success && DateTime.TryParse(wfhDate.Value, out var date))
+					if (string.IsNullOrWhiteSpace(empCode)
+						|| (empCodeParsed.status && empCodeParsed.value == empCode))
+					{
+						result = new Mail
+						{
+							Email = GetSenderSMTPAddress(mailItem),
+							Name = mailItem.SenderName,
+							ReceivedTime = mailItem.ReceivedTime,
+							Status = true
+						};
+					}
+					else
+					{
+						continue;
+					}
+
+					if (empCodeParsed.status)
+					{
+						result.EmployeeCode = empCodeParsed.value;
+					}
+					else
+					{
+						result.Status = false;
+						sbRemarks.Append($", Invald employee code value {empCodeParsed.value}");
+					}
+
+					var wfhDateParsed = Regex.Match(isWfh.Value, dateTemplate.extract, RegexOptions.IgnoreCase);
+					if (wfhDateParsed.Success && DateTime.TryParse(wfhDateParsed.Value, out var date))
 					{
 						result.Date = date;
 					}
 					else
 					{
 						result.Status = false;
-						sbRemarks.AppendLine("Invalid date");
+						sbRemarks.Append(", Invalid date");
 					}
 
-					Func<SearchTemplate[], (string value, bool status)> parseTime = (searchTemplates) =>
-					{
-						foreach (var searchTemplate in searchTemplates)
-						{
-							var searchMatch = Regex.Match(mailItem.Body, searchTemplate.search, RegexOptions.IgnoreCase);
-							if (searchMatch.Success)
-							{
-								var extractMatch = Regex.Match(searchMatch.Value, searchTemplate.extract, RegexOptions.IgnoreCase);
-								if (extractMatch.Success)
-								{
-									return (extractMatch.Value, true);
-								}
-								else
-								{
-									return (string.Empty, false);
-								}
-							}
-						}
-
-						return (string.Empty, false);
-					};
-
-
-					var timeIn = parseTime(wfhTemplate.timein);
-					if (timeIn.status
-						&& DateTime.TryParse(timeIn.value, out var dateTimeIn))
+					var timeInParsed = parseTime(wfhTemplate.timein);
+					if (timeInParsed.status
+						&& DateTime.TryParse(timeInParsed.value, out var dateTimeIn))
 					{
 						result.TimeIn = dateTimeIn.TimeOfDay;
 					}
 					else
 					{
 						result.Status = false;
-						sbRemarks.AppendLine($"Invald time in value {timeIn.value}.");
+						sbRemarks.Append($", Invald time in value {timeInParsed.value}");
 					}
 
-					var timeOut = parseTime(wfhTemplate.timeout);
-					if (timeOut.status
-						&& DateTime.TryParse(timeOut.value, out var dateTimeOut))
+					var timeOutParsed = parseTime(wfhTemplate.timeout);
+					if (timeOutParsed.status
+						&& DateTime.TryParse(timeOutParsed.value, out var dateTimeOut))
 					{
 						result.TimeOut = dateTimeOut.TimeOfDay;
 					}
 					else
 					{
 						result.Status = false;
-						sbRemarks.AppendLine($"Invald time out value {timeOut.value}.");
+						sbRemarks.Append($", Invald time out value {timeOutParsed.value}");
 					}
 
-					var hours = parseTime(wfhTemplate.hours);
-					if (hours.status
-						&& decimal.TryParse(hours.value, out var totalHours))
+					var hoursParsed = parseTime(wfhTemplate.hours);
+					if (hoursParsed.status
+						&& decimal.TryParse(hoursParsed.value, out var totalHours))
 					{
 						result.Hours = totalHours;
 					}
 					else
 					{
 						result.Status = false;
-						sbRemarks.AppendLine($"Invald hours value {hours.value}.");
+						sbRemarks.Append($", Invald hours value {hoursParsed.value}");
 					}
 
 					result.Remarks = sbRemarks.ToString();
@@ -260,6 +293,6 @@ namespace HRMS_TM_Utility
 	{
 		Profile SaveProfile(Profile profile);
 		List<Profile> GetProfiles();
-		ConcurrentBag<Mail> GetMails(Profile profile, DateTime dateFrom, DateTime dateTo);
+		IEnumerable<Mail> GetMails(Profile profile, DateTime dateFrom, DateTime dateTo, string empCode);
 	}
 }

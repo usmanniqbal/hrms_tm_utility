@@ -25,15 +25,19 @@ namespace HRMS_TM_Utility
 		private void btnFetch_Click(object sender, EventArgs e)
 		{
 			Mail mail;
-			var dataSource = _outlookService.GetMails((Profile)cboProfiles.SelectedItem, dtpFrom.Value, dtpTo.Value)
+			var dataSource = _outlookService.GetMails((Profile)cboProfiles.SelectedItem, dtpFrom.Value, dtpTo.Value, txtEmpCode.Text)
 				.OrderBy(o => o.Date)
 				.ThenBy(o => o.Email)
 				.ToList();
 			dgv.DataSource = dataSource;
+			dgv.AutoSize = true;
+			dgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
 			dgv.Columns[nameof(mail.Email)].ReadOnly = true;
 			dgv.Columns[nameof(mail.Name)].ReadOnly = true;
 			dgv.Columns[nameof(mail.Date)].ReadOnly = true;
+			dgv.Columns[nameof(mail.Remarks)].ReadOnly = true;
 			dgv.Columns[nameof(mail.Status)].Visible = false;
+			dgv.Columns[nameof(mail.Icon)].DefaultCellStyle.NullValue = null;
 			btnExport.Enabled = dataSource.Count > 0;
 		}
 
@@ -87,9 +91,9 @@ namespace HRMS_TM_Utility
 		private void cboProfiles_SelectedValueChanged(object sender, EventArgs e)
 		{
 			var profile = (Profile)cboProfiles.SelectedItem;
-			txtProfileName.Text = profile.ProfileName;
-			txtStoreName.Text = profile.StoreName;
-			txtFolderName.Text = profile.Folder;
+			txtProfileName.Text = profile?.ProfileName;
+			txtStoreName.Text = profile?.StoreName;
+			txtFolderName.Text = profile?.Folder;
 		}
 
 		private void btnCancel_Click(object sender, EventArgs e)
@@ -118,12 +122,14 @@ namespace HRMS_TM_Utility
 			{
 				excelEntity = new ExcelEntity
 				{
-					Name = row.Cells[nameof(excelEntity.Name)].Value.ToString(),
-					Email = row.Cells[nameof(excelEntity.Email)].Value.ToString(),
+					Name = Convert.ToString(row.Cells[nameof(excelEntity.Name)].Value),
+					Email = Convert.ToString(row.Cells[nameof(excelEntity.Email)].Value),
+					EmployeeCode = Convert.ToString(row.Cells[nameof(excelEntity.EmployeeCode)].Value),
 					Date = (DateTime)row.Cells[nameof(excelEntity.Date)].Value,
 					TimeIn = new DateTime(((TimeSpan)row.Cells[nameof(excelEntity.TimeIn)].Value).Ticks),
 					TimeOut = new DateTime(((TimeSpan)row.Cells[nameof(excelEntity.TimeOut)].Value).Ticks),
 					Hours = (decimal)row.Cells[nameof(excelEntity.Hours)].Value,
+					Remarks = Convert.ToString(row.Cells[nameof(excelEntity.Remarks)].Value)
 				};
 				excelEntities.Add(excelEntity);
 			}
