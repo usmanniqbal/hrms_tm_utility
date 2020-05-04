@@ -24,26 +24,48 @@ namespace HRMS_TM_Utility
 
 		private void btnFetch_Click(object sender, EventArgs e)
 		{
-			Mail mail;
 			var dataSource = _outlookService.GetMails((Profile)cboProfiles.SelectedItem, dtpFrom.Value, dtpTo.Value, txtEmpCode.Text)
 				.OrderBy(o => o.Date)
 				.ThenBy(o => o.Email)
 				.ToList();
 			dgv.DataSource = dataSource;
+			SetGrid();
+			FetchActionControl(dataSource.Count > 0);
+		}
+
+		private void FetchActionControl(bool enabled)
+		{
+			btnExport.Enabled =
+			btnArchive.Enabled =
+			btnReset.Enabled = enabled;
+
+			btnFetch.Enabled =
+			btnNew.Enabled =
+			dtpFrom.Enabled =
+			dtpTo.Enabled =
+			txtEmpCode.Enabled = !enabled;
+		}
+
+		private void SetGrid()
+		{
+			Mail mail;
 			dgv.AutoSize = true;
 			dgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+
 			dgv.Columns[nameof(mail.Email)].ReadOnly = true;
 			dgv.Columns[nameof(mail.Name)].ReadOnly = true;
 			dgv.Columns[nameof(mail.Date)].ReadOnly = true;
 			dgv.Columns[nameof(mail.Remarks)].ReadOnly = true;
+
+			dgv.Columns[nameof(mail.MailId)].Visible = false;
 			dgv.Columns[nameof(mail.Status)].Visible = false;
+
 			dgv.Columns[nameof(mail.Icon)].DefaultCellStyle.NullValue = null;
-			btnExport.Enabled = dataSource.Count > 0;
 		}
 
 		private void frmImport_Load(object sender, EventArgs e)
 		{
-			ActionControl(false);
+			ProfileActionControl(false);
 			LoadProfiles();
 			dtpFrom.MaxDate = dtpTo.MaxDate = DateTime.Now.Date;
 			dtpFrom.Value = DateTime.Now.AddDays(-7);
@@ -51,14 +73,15 @@ namespace HRMS_TM_Utility
 
 		private void btnNew_Click(object sender, EventArgs e)
 		{
-			ActionControl(true);
+			ProfileActionControl(true);
 		}
 
-		private void ActionControl(bool enabled)
+		private void ProfileActionControl(bool enabled)
 		{
 			txtProfileName.Enabled =
 			txtStoreName.Enabled =
 			txtFolderName.Enabled =
+			txtArcFolder.Enabled =
 			btnSave.Enabled =
 			btnCancel.Enabled = enabled;
 
@@ -74,8 +97,9 @@ namespace HRMS_TM_Utility
 				ProfileName = txtProfileName.Text,
 				StoreName = txtStoreName.Text,
 				Folder = txtFolderName.Text,
+				ArchiveFolder = txtArcFolder.Text
 			});
-			ActionControl(false);
+			ProfileActionControl(false);
 			LoadProfiles();
 			cboProfiles.SelectedValue = profile.Id;
 		}
@@ -94,11 +118,12 @@ namespace HRMS_TM_Utility
 			txtProfileName.Text = profile?.ProfileName;
 			txtStoreName.Text = profile?.StoreName;
 			txtFolderName.Text = profile?.Folder;
+			txtArcFolder.Text = profile?.ArchiveFolder;
 		}
 
 		private void btnCancel_Click(object sender, EventArgs e)
 		{
-			ActionControl(false);
+			ProfileActionControl(false);
 		}
 
 		private void btnExport_Click(object sender, EventArgs e)
@@ -134,6 +159,36 @@ namespace HRMS_TM_Utility
 				excelEntities.Add(excelEntity);
 			}
 			_excelService.Export(path, excelEntities);
+			MessageBox.Show("Emails exported successfully");
+			FetchActionControl(false);
+			dgv.DataSource = null;
+		}
+
+		private void btnArchive_Click(object sender, EventArgs e)
+		{
+			var profile = (Profile)cboProfiles.SelectedItem;
+			var mails = (List<Mail>)dgv.DataSource;
+			var result = _outlookService.ArchiveMails(profile, mails);
+
+			if (string.IsNullOrWhiteSpace(result.error))
+			{
+				dgv.DataSource = null;
+				dgv.DataSource = result.mails;
+				SetGrid();
+				FetchActionControl(false);
+				dgv.DataSource = null;
+				MessageBox.Show("Emails archived successfully");
+			}
+			else
+			{
+				MessageBox.Show(result.error);
+			}
+		}
+
+		private void btnReset_Click(object sender, EventArgs e)
+		{
+			FetchActionControl(false);
+			dgv.DataSource = null;
 		}
 	}
 }

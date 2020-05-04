@@ -13,5 +13,6 @@ namespace HRMS_TM_Utility
 		public string ProfileName { get; set; }
 		public string StoreName { get; set; }
 		public string Folder { get; set; }
+		public string ArchiveFolder { get; set; }
 	}
 }

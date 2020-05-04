@@ -48,15 +48,19 @@
 			this.btnExport = new System.Windows.Forms.Button();
 			this.txtEmpCode = new System.Windows.Forms.TextBox();
 			this.label4 = new System.Windows.Forms.Label();
+			this.label8 = new System.Windows.Forms.Label();
+			this.txtArcFolder = new System.Windows.Forms.TextBox();
+			this.btnArchive = new System.Windows.Forms.Button();
+			this.btnReset = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.dgv)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// btnFetch
 			// 
-			this.btnFetch.Location = new System.Drawing.Point(473, 6);
+			this.btnFetch.Location = new System.Drawing.Point(417, 6);
 			this.btnFetch.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.btnFetch.Name = "btnFetch";
-			this.btnFetch.Size = new System.Drawing.Size(64, 26);
+			this.btnFetch.Size = new System.Drawing.Size(57, 26);
 			this.btnFetch.TabIndex = 0;
 			this.btnFetch.Text = "Fetch";
 			this.btnFetch.UseVisualStyleBackColor = true;
@@ -96,7 +100,7 @@
 			this.cboProfiles.Location = new System.Drawing.Point(109, 6);
 			this.cboProfiles.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.cboProfiles.Name = "cboProfiles";
-			this.cboProfiles.Size = new System.Drawing.Size(359, 24);
+			this.cboProfiles.Size = new System.Drawing.Size(299, 24);
 			this.cboProfiles.TabIndex = 6;
 			this.cboProfiles.SelectedValueChanged += new System.EventHandler(this.cboProfiles_SelectedValueChanged);
 			// 
@@ -130,7 +134,7 @@
 			// label5
 			// 
 			this.label5.AutoSize = true;
-			this.label5.Location = new System.Drawing.Point(19, 142);
+			this.label5.Location = new System.Drawing.Point(19, 168);
 			this.label5.Name = "label5";
 			this.label5.Size = new System.Drawing.Size(84, 17);
 			this.label5.TabIndex = 11;
@@ -142,12 +146,12 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.dgv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			this.dgv.Location = new System.Drawing.Point(12, 195);
+			this.dgv.Location = new System.Drawing.Point(12, 221);
 			this.dgv.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.dgv.Name = "dgv";
 			this.dgv.RowHeadersWidth = 51;
 			this.dgv.RowTemplate.Height = 24;
-			this.dgv.Size = new System.Drawing.Size(1091, 537);
+			this.dgv.Size = new System.Drawing.Size(1091, 511);
 			this.dgv.TabIndex = 12;
 			// 
 			// txtProfileName
@@ -193,7 +197,7 @@
 			// 
 			this.dtpFrom.Checked = false;
 			this.dtpFrom.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-			this.dtpFrom.Location = new System.Drawing.Point(109, 142);
+			this.dtpFrom.Location = new System.Drawing.Point(109, 168);
 			this.dtpFrom.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.dtpFrom.MinDate = new System.DateTime(2000, 1, 1, 0, 0, 0, 0);
 			this.dtpFrom.Name = "dtpFrom";
@@ -204,7 +208,7 @@
 			// dtpTo
 			// 
 			this.dtpTo.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-			this.dtpTo.Location = new System.Drawing.Point(264, 142);
+			this.dtpTo.Location = new System.Drawing.Point(264, 168);
 			this.dtpTo.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.dtpTo.MinDate = new System.DateTime(2000, 1, 1, 0, 0, 0, 0);
 			this.dtpTo.Name = "dtpTo";
@@ -214,7 +218,7 @@
 			// label7
 			// 
 			this.label7.AutoSize = true;
-			this.label7.Location = new System.Drawing.Point(233, 146);
+			this.label7.Location = new System.Drawing.Point(233, 172);
 			this.label7.Name = "label7";
 			this.label7.Size = new System.Drawing.Size(25, 17);
 			this.label7.TabIndex = 15;
@@ -224,10 +228,10 @@
 			// 
 			this.btnExport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnExport.Enabled = false;
-			this.btnExport.Location = new System.Drawing.Point(1039, 165);
+			this.btnExport.Location = new System.Drawing.Point(1029, 191);
 			this.btnExport.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.btnExport.Name = "btnExport";
-			this.btnExport.Size = new System.Drawing.Size(64, 26);
+			this.btnExport.Size = new System.Drawing.Size(74, 26);
 			this.btnExport.TabIndex = 16;
 			this.btnExport.Text = "Export";
 			this.btnExport.UseVisualStyleBackColor = true;
@@ -235,7 +239,7 @@
 			// 
 			// txtEmpCode
 			// 
-			this.txtEmpCode.Location = new System.Drawing.Point(109, 169);
+			this.txtEmpCode.Location = new System.Drawing.Point(109, 195);
 			this.txtEmpCode.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.txtEmpCode.Name = "txtEmpCode";
 			this.txtEmpCode.Size = new System.Drawing.Size(119, 22);
@@ -244,17 +248,63 @@
 			// label4
 			// 
 			this.label4.AutoSize = true;
-			this.label4.Location = new System.Drawing.Point(25, 172);
+			this.label4.Location = new System.Drawing.Point(25, 198);
 			this.label4.Name = "label4";
 			this.label4.Size = new System.Drawing.Size(77, 17);
 			this.label4.TabIndex = 18;
 			this.label4.Text = "Emp. Code";
+			// 
+			// label8
+			// 
+			this.label8.AutoSize = true;
+			this.label8.Location = new System.Drawing.Point(3, 145);
+			this.label8.Name = "label8";
+			this.label8.Size = new System.Drawing.Size(99, 17);
+			this.label8.TabIndex = 20;
+			this.label8.Text = "Archive Folder";
+			// 
+			// txtArcFolder
+			// 
+			this.txtArcFolder.Location = new System.Drawing.Point(109, 142);
+			this.txtArcFolder.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+			this.txtArcFolder.Name = "txtArcFolder";
+			this.txtArcFolder.Size = new System.Drawing.Size(428, 22);
+			this.txtArcFolder.TabIndex = 19;
+			// 
+			// btnArchive
+			// 
+			this.btnArchive.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnArchive.Enabled = false;
+			this.btnArchive.Location = new System.Drawing.Point(949, 191);
+			this.btnArchive.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+			this.btnArchive.Name = "btnArchive";
+			this.btnArchive.Size = new System.Drawing.Size(74, 26);
+			this.btnArchive.TabIndex = 21;
+			this.btnArchive.Text = "Archive";
+			this.btnArchive.UseVisualStyleBackColor = true;
+			this.btnArchive.Click += new System.EventHandler(this.btnArchive_Click);
+			// 
+			// btnReset
+			// 
+			this.btnReset.Enabled = false;
+			this.btnReset.Location = new System.Drawing.Point(480, 6);
+			this.btnReset.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+			this.btnReset.Name = "btnReset";
+			this.btnReset.Size = new System.Drawing.Size(57, 26);
+			this.btnReset.TabIndex = 22;
+			this.btnReset.Text = "Reset";
+			this.btnReset.UseVisualStyleBackColor = true;
+			this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
 			// 
 			// frmImport
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1115, 744);
+			this.Controls.Add(this.btnReset);
+			this.Controls.Add(this.btnArchive);
+			this.Controls.Add(this.label8);
+			this.Controls.Add(this.txtArcFolder);
 			this.Controls.Add(this.label4);
 			this.Controls.Add(this.txtEmpCode);
 			this.Controls.Add(this.btnExport);
@@ -307,6 +357,10 @@
         private System.Windows.Forms.Button btnExport;
 		private System.Windows.Forms.TextBox txtEmpCode;
 		private System.Windows.Forms.Label label4;
+		private System.Windows.Forms.Label label8;
+		private System.Windows.Forms.TextBox txtArcFolder;
+		private System.Windows.Forms.Button btnArchive;
+		private System.Windows.Forms.Button btnReset;
 	}
 }
 

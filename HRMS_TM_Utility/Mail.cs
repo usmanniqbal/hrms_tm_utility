@@ -9,6 +9,7 @@ namespace HRMS_TM_Utility
 {
 	public class Mail
 	{
+		public string MailId { get; set; }
 		public Image Icon => Status ? null : Properties.Resources.Icon_Notification;
 		public string Email { get; set; }
 		public string Name { get; set; }
