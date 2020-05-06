@@ -64,7 +64,7 @@ namespace HRMS_TM_Utility
 					rowIndex++;
 					workSheet.Cells[rowIndex, ExcelColumns.Name] = entity.Name;
 					workSheet.Cells[rowIndex, ExcelColumns.Email] = entity.Email;
-					workSheet.Cells[rowIndex, ExcelColumns.EmployeeCode] = entity.EmployeeCode;
+					workSheet.Cells[rowIndex, ExcelColumns.EmployeeCode] = $"'{entity.EmployeeCode}";
 					workSheet.Cells[rowIndex, ExcelColumns.Date] = entity.Date;
 					workSheet.Cells[rowIndex, ExcelColumns.TimeIn] = entity.TimeIn;
 					workSheet.Cells[rowIndex, ExcelColumns.TimeOut] = entity.TimeOut;

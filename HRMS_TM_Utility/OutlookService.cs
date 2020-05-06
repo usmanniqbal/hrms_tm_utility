@@ -82,7 +82,7 @@ namespace HRMS_TM_Utility
 					}
 
 					var wfhDateParsed = Regex.Match(isWfh.Value, dateTemplate.extract, RegexOptions.IgnoreCase);
-					if (wfhDateParsed.Success && DateTime.TryParse(wfhDateParsed.Value, out var date))
+					if (wfhDateParsed.Success && DateTime.TryParse(wfhDateParsed.Value.Replace(" ", ""), out var date))
 					{
 						result.Date = date;
 					}
@@ -96,7 +96,7 @@ namespace HRMS_TM_Utility
 					if (timeInParsed.status
 						&& DateTime.TryParse(timeInParsed.value, out var dateTimeIn))
 					{
-						result.TimeIn = dateTimeIn.TimeOfDay;
+						result.TimeIn = new DateTime(dateTimeIn.TimeOfDay.Ticks);
 					}
 					else
 					{
@@ -108,7 +108,7 @@ namespace HRMS_TM_Utility
 					if (timeOutParsed.status
 						&& DateTime.TryParse(timeOutParsed.value, out var dateTimeOut))
 					{
-						result.TimeOut = dateTimeOut.TimeOfDay;
+						result.TimeOut = new DateTime(dateTimeOut.TimeOfDay.Ticks);
 					}
 					else
 					{

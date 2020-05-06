@@ -61,6 +61,8 @@ namespace HRMS_TM_Utility
 			dgv.Columns[nameof(mail.Status)].Visible = false;
 
 			dgv.Columns[nameof(mail.Icon)].DefaultCellStyle.NullValue = null;
+			dgv.Columns[nameof(mail.TimeIn)].DefaultCellStyle.Format = "hh:mm tt";
+			dgv.Columns[nameof(mail.TimeOut)].DefaultCellStyle.Format = "hh:mm tt";
 		}
 
 		private void frmImport_Load(object sender, EventArgs e)
@@ -119,6 +121,7 @@ namespace HRMS_TM_Utility
 			txtStoreName.Text = profile?.StoreName;
 			txtFolderName.Text = profile?.Folder;
 			txtArcFolder.Text = profile?.ArchiveFolder;
+			btnFetch.Enabled = profile != null;
 		}
 
 		private void btnCancel_Click(object sender, EventArgs e)
@@ -151,8 +154,8 @@ namespace HRMS_TM_Utility
 					Email = Convert.ToString(row.Cells[nameof(excelEntity.Email)].Value),
 					EmployeeCode = Convert.ToString(row.Cells[nameof(excelEntity.EmployeeCode)].Value),
 					Date = (DateTime)row.Cells[nameof(excelEntity.Date)].Value,
-					TimeIn = new DateTime(((TimeSpan)row.Cells[nameof(excelEntity.TimeIn)].Value).Ticks),
-					TimeOut = new DateTime(((TimeSpan)row.Cells[nameof(excelEntity.TimeOut)].Value).Ticks),
+					TimeIn = (DateTime)row.Cells[nameof(excelEntity.TimeIn)].Value,
+					TimeOut = (DateTime)row.Cells[nameof(excelEntity.TimeOut)].Value,
 					Hours = (decimal)row.Cells[nameof(excelEntity.Hours)].Value,
 					Remarks = Convert.ToString(row.Cells[nameof(excelEntity.Remarks)].Value)
 				};

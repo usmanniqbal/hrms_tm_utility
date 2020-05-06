@@ -15,8 +15,8 @@ namespace HRMS_TM_Utility
 		public string Name { get; set; }
 		public string EmployeeCode { get; set; }
 		public DateTime Date { get; set; }
-		public TimeSpan TimeIn { get; set; }
-		public TimeSpan TimeOut { get; set; }
+		public DateTime TimeIn { get; set; }
+		public DateTime TimeOut { get; set; }
 		public decimal Hours { get; set; }
 		public bool Status { get; set; }
 		public string Remarks { get; set; }
