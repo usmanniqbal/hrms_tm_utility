@@ -15,6 +15,7 @@ namespace HRMS_TM_Utility
 		private readonly IOutlookService _outlookService;
 		private readonly IExcelService _excelService;
 		private static readonly log4net.ILog _log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+		private Guid? _profileId;
 		public frmImport()
 		{
 			InitializeComponent();
@@ -43,7 +44,10 @@ namespace HRMS_TM_Utility
 			btnNew.Enabled =
 			dtpFrom.Enabled =
 			dtpTo.Enabled =
+			cboProfiles.Enabled =
 			txtEmpCode.Enabled = !enabled;
+
+			btnEdit.Enabled = !enabled && _profileId != null;
 		}
 
 		private void SetGrid()
@@ -76,6 +80,7 @@ namespace HRMS_TM_Utility
 		private void btnNew_Click(object sender, EventArgs e)
 		{
 			ProfileActionControl(true);
+			cboProfiles.SelectedIndex = -1;
 		}
 
 		private void ProfileActionControl(bool enabled)
@@ -87,15 +92,18 @@ namespace HRMS_TM_Utility
 			btnSave.Enabled =
 			btnCancel.Enabled = enabled;
 
+			btnNew.Enabled =
 			btnFetch.Enabled =
 			cboProfiles.Enabled = !enabled;
+
+			btnEdit.Enabled = !enabled && _profileId != null;
 		}
 
 		private void btnSave_Click(object sender, EventArgs e)
 		{
 			var profile = _outlookService.SaveProfile(new Profile
 			{
-				Id = Guid.NewGuid(),
+				Id = _profileId ?? Guid.NewGuid(),
 				ProfileName = txtProfileName.Text,
 				StoreName = txtStoreName.Text,
 				Folder = txtFolderName.Text,
@@ -117,11 +125,13 @@ namespace HRMS_TM_Utility
 		private void cboProfiles_SelectedValueChanged(object sender, EventArgs e)
 		{
 			var profile = (Profile)cboProfiles.SelectedItem;
+			_profileId = profile?.Id;
 			txtProfileName.Text = profile?.ProfileName;
 			txtStoreName.Text = profile?.StoreName;
 			txtFolderName.Text = profile?.Folder;
 			txtArcFolder.Text = profile?.ArchiveFolder;
 			btnFetch.Enabled = profile != null;
+			btnEdit.Enabled = profile != null;
 		}
 
 		private void btnCancel_Click(object sender, EventArgs e)
@@ -192,6 +202,11 @@ namespace HRMS_TM_Utility
 		{
 			FetchActionControl(false);
 			dgv.DataSource = null;
+		}
+
+		private void btnEdit_Click(object sender, EventArgs e)
+		{
+			ProfileActionControl(true);
 		}
 	}
 }

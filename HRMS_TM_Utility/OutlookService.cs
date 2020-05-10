@@ -222,7 +222,7 @@ namespace HRMS_TM_Utility
 			if (!string.IsNullOrEmpty(profile.Folder))
 			{
 				_log.Info($"GetMails: fetching {profile.Folder} folder");
-				folder = folder.Folders.Cast<Folder>().First(o => o.Name == profile.Folder);
+				folder = folder.Folders.Cast<Folder>().First(o => o.Name.ToLower() == profile.Folder.ToLower());
 			}
 
 			dateTo = dateTo.Date.AddDays(1).AddSeconds(-1);
@@ -289,13 +289,13 @@ namespace HRMS_TM_Utility
 			}
 
 			MAPIFolder destFolder = store.GetDefaultFolder(OlDefaultFolders.olFolderInbox)
-				.Folders.Cast<Folder>().First(o => o.Name == profile.Folder)
-				.Folders.Cast<Folder>().First(o => o.Name == profile.ArchiveFolder);
+				.Folders.Cast<Folder>().First(o => o.Name.ToLower() == profile.Folder.ToLower())
+				.Folders.Cast<Folder>().First(o => o.Name.ToLower() == profile.ArchiveFolder.ToLower());
 
 			mails.AsParallel().ForAll(mail =>
 			{
 				var item = names.GetItemFromID(mail.MailId, store.StoreID);
-				if(!(item is MailItem mailItem))
+				if (!(item is MailItem mailItem))
 				{
 					mail.Status = false;
 					mail.Remarks = $"Invalid mail item.";
@@ -329,6 +329,11 @@ namespace HRMS_TM_Utility
 		public Profile SaveProfile(Profile profile)
 		{
 			var savedProfiles = GetProfiles();
+
+			if (savedProfiles.Any(o => o.Id == profile.Id))
+			{
+				savedProfiles.Remove(savedProfiles.Single(o => o.Id == profile.Id));
+			}
 
 			savedProfiles.Add(profile);
 			var json = JsonConvert.SerializeObject(savedProfiles);

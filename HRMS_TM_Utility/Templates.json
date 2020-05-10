@@ -9,21 +9,21 @@
     "empcode": [
       {
 
-        "search": "code.*[0-9]{5}",
+        "search": "(employee )?code.*[0-9]{5}",
         "extract": "[0-9]{5}"
       }
     ],
     "timein": [
       {
 
-        "search": "timein.*[0-9]{1,2}.{1}[0-9]{1,2}.{1}([aApP][mM])?",
+        "search": "time( )?in.*[0-9]{1,2}.{1}[0-9]{1,2}.{1}([aApP][mM])?",
         "extract": "[0-9]{1,2}.{1}[0-9]{1,2}.{1}([aApP][mM])?"
       }
     ],
     "timeout": [
       {
 
-        "search": "timeout.*[0-9]{1,2}.{1}[0-9]{1,2}.{1}([aApP][mM])?",
+        "search": "time( )?out.*[0-9]{1,2}.{1}[0-9]{1,2}.{1}([aApP][mM])?",
         "extract": "[0-9]{1,2}.{1}[0-9]{1,2}.{1}([aApP][mM])?"
       }
     ],
